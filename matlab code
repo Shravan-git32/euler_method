@@ -1,0 +1,54 @@
+% MATLAB code to solve dy/dx = x * y^2 using Euler's Method with proper scaling
+
+% Define parameters
+h = 0.1;             % Step size
+x_start = 0;         % Initial x value
+x_end = 2;           % Final x value
+y0 = 1;              % Initial condition y(0)
+
+% Compute the number of steps
+n_steps = ceil((x_end - x_start) / h);
+
+% Initialize arrays to store results
+x = zeros(1, n_steps + 1);
+y = zeros(1, n_steps + 1);
+
+% Set initial values
+x(1) = x_start;
+y(1) = y0;
+
+% Euler's Method Loop
+for i = 1:n_steps
+    x(i + 1) = x(i) + h;
+    y(i + 1) = y(i) + h * (x(i) * y(i)^2);
+end
+
+% Display the results
+fprintf('Results:\n');
+for i = 1:length(x)
+    fprintf('x = %.2f, y = %.4f\n', x(i), y(i));
+end
+
+% Plot results
+figure;
+plot(x, y, '-o', 'LineWidth', 1.5);
+hold on;
+
+% Customize the plot
+title('Solution of dy/dx = x*y^2 using Euler''s Method', 'FontSize', 14);
+xlabel('x', 'FontSize', 12);
+ylabel('y', 'FontSize', 12);
+grid on;
+
+% Scale the axes
+xlim([0 max(x)]);
+ylim([0 max(y)]);
+xticks(0:h:x_end);                % Scale x-axis with step size h
+yticks(0:0.1:ceil(max(y)));       % Scale y-axis with increments of 0.1
+
+% Add legend
+legend(['h = ' num2str(h) ', y(0) = ' num2str(y0)], 'FontSize', 10);
+
+% Display the plot
+hold off;
+
